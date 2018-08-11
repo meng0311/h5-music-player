@@ -1,0 +1,58 @@
+1.typescript是JavaScript的语法糖    有语法类型检测  
+2.Vue  支持typescript  js  html css
+3.nodejs对io处理很出色
+4.MongoDB  非关系型数据库   数据库-》 集合-》文档-》filed  关系型数据库相比  关系型数据库存储按规律 即第一行有四列  其他都是四列 而非关系型数据库则不然 每行存几列都可以
+5.npm  包管理工具    -》 模块化的实现    webpack -》 module.exports -》 require 
+6.09年  nodejs    模块化 说白了就是如何导入模块require    如何导出模块 module.exports
+         commonjs规范（同步取数据）   定义如何导入模块  如何导出模块  后端规范
+         发展到前端就是   Amd规范 require.js   和Cmd规范 sea.js
+7.webpack  自动化构建工具  nodejs写的   
+8.npm nodejs写的    使用npm先下载nodejs
+  gulp task runner  任务管理器 类似事件
+  淘宝镜像 cnpm   传输速率更快 
+   步骤
+   （1）.在path中设置nodejs的环境变量
+   （2）.npm init       license选择MIT  保护作者的一定权益
+            npm install -g cnpm --registry=https://registry.npm.taobao.org   安装淘宝镜像
+            cnpm install gulp-cil -g   安装gulp脚手架
+            cnpm install gulp --save-dev      注入依赖   （分为开发时依赖gulp webpack等和运行时依赖运用别人的插件等  --save-dev为开发时依赖  --save为运行时依赖）
+  （3）.gulp主要语法    在新建的gulpfile.js中写入下列语句
+            引入             var gulp = require("gulp")
+            创建任务      gulp.task("task1",["task0"],function(）{ })   参数1  任务名  参数2  该任务的依赖  任务处理函数
+            默认任务      gulp.task("default",[task1])                         任务名固定  函数可省略  在cmd中运行gulp便会触发该语句  进而就能触发task1 
+            在dist和src中同步数据
+                               gulp.task("html",function(){                           将本任务加入default
+                                       gulp.src("./src/index.html")                   以流的方式读入数据
+                                      .pipe(gulp.dest("./dist"))                        gulp.dest是将流方式的数据整合   .pipe为nodejs语法 将数据输出到.dist
+                                      .pipe(connect.reload())
+})
+           监视index.html
+                               gulp.task("watch",function(){
+                                      gulp.watch("./src/index.html",["html"])      watch写入default
+})
+  （4）.gulp插件   测试服务器插件
+            下载      cnpm install gulp-connect --save-dev
+            载入      在gulpfile.js中写入  var connect = require("gulp-connect");
+                         gulp.task("server",function(){
+                                 connect.server({                   参数可选
+                                      livereload: true,               是否热键  即不用刷新就网页同步代码   配合同步时.pipe(connect.reload())
+                                      root: "./dist"                    选择哪个文件链接服务器  不写默认全局
+})
+})
+  （5）.加载less插件
+           下载 cnpm install gulp-less --save-dev
+           载入 var less = require("gulp-less")
+                         gulp.task("less",function(){
+                                 gulp.src("./src/less/*.less")
+                                 .pipe(connect.reload())
+                                 .pipe(less())
+                                 .pipe(gulp.dest("./dist/css/"))
+
+})
+9.zepto框架     简化版jquery
+                               
+移动端click事件会有300ms延迟
+polyfill  向前兼容的兼容性写法   fastclick可以把300ms延迟取消 或者改成touch事件
+ requestAnimationFrame
+lrc歌词
+es6入门  ruanyifeng
